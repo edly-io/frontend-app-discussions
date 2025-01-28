@@ -165,6 +165,7 @@ const CommentEditor = ({
           <PostPreviewPanel htmlNode={values.comment} />
           <div className="d-flex py-2 justify-content-end">
             <Button
+            className='secondary-color-btn'
               variant="outline-primary"
               onClick={() => handleCloseEditor(resetForm)}
             >
@@ -176,7 +177,7 @@ const CommentEditor = ({
                 default: intl.formatMessage(messages.submit),
                 pending: intl.formatMessage(messages.submitting),
               }}
-              className="ml-2"
+              className="ml-2 purple-bg border-purple-color"
               variant="primary"
               onClick={handleSubmit}
             />

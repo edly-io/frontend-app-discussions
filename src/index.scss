@@ -21,7 +21,22 @@ $fa-font-path: "~font-awesome/fonts";
   }
 }
 
-.text-staff-color {
+.purple-color {
+  color: #4600c7 !important;
+}
+.border-purple-color {
+  border-color: #4600c7;
+}
+.purple-bg {
+  background-color: #4600c7 !important;
+}
+.dark-black-color {
+  color: #111827 !important;
+}
+.bg-light-grey {
+  background-color: #f3f3f3;
+}
+.bla .text-staff-color {
   color: $warning-700;
 }
 
@@ -158,7 +173,7 @@ $fa-font-path: "~font-awesome/fonts";
 
 .badge-padding {
   padding-top: 1px;
-  padding-bottom: 1px
+  padding-bottom: 1px;
 }
 
 .discussion-post:hover {
@@ -223,7 +238,7 @@ header {
 }
 
 #learner-posts-link {
-  span[role=heading]:hover {
+  span[role="heading"]:hover {
     text-decoration: underline;
   }
 }
@@ -255,7 +270,7 @@ header {
 }
 
 .post-form {
-  input[type=checkbox] {
+  input[type="checkbox"] {
     width: 18px !important;
     height: 18px !important;
   }
@@ -280,29 +295,29 @@ header {
       font-size: 18px !important;
       font-weight: 400;
       line-height: 28px;
-    };
+    }
 
     span {
       font-weight: 500;
       line-height: 24px;
-    };
-  };
+    }
+  }
 
   .container-xl {
     .course-title-lockup {
       font-size: 1.125rem !important;
-    };
+    }
 
     .logo {
       margin-top: 2px;
-    };
-  };
+    }
+  }
 
   span:first-child {
     font-size: 14px !important;
     margin-top: 1px !important;
     margin-bottom: -1px !important;
-  };
+  }
 }
 
 #courseTabsNavigation {
@@ -319,7 +334,7 @@ header {
     .nav-item {
       padding-bottom: 8px;
     }
-  };
+  }
 }
 
 .min-content-height {
@@ -331,14 +346,14 @@ header {
   box-shadow: 0px 2px 4px rgb(0 0 0 / 15%), 0px 2px 8px rgb(0 0 0 / 15%);
   top: 0;
 
-  .nav-button-group{
-    .nav-item:not(:last-child){
+  .nav-button-group {
+    .nav-item:not(:last-child) {
       .nav-link {
-          border-right: 0;
+        border-right: 0;
 
-          @media screen and (max-width: 567px) {
-            border-right: solid 1px #e9e6e4;
-          }
+        @media screen and (max-width: 567px) {
+          border-right: solid 1px #e9e6e4;
+        }
       }
     }
   }
@@ -374,9 +389,8 @@ header {
 
 .btn-icon.btn-icon-primary:hover {
   background-color: $light-300 !important;
-  color: $primary-500 !important
+  color: $primary-500 !important;
 }
-
 
 @media only screen and (max-width: 767px) {
   body:not(.tox-force-desktop) .tox .tox-dialog {
@@ -433,7 +447,7 @@ header {
   }
 
   .nav-link.active,
-  .show>.nav-link {
+  .show > .nav-link {
     background-color: $primary-500 !important;
   }
 }
@@ -441,7 +455,7 @@ header {
 .course-tabs-navigation {
   .nav a {
     &:hover {
-      background-color: $light-300 !important;;
+      background-color: $light-300 !important;
     }
   }
 }
@@ -550,11 +564,11 @@ code {
   line-height: 28px !important;
 }
 
-.usabilla_live_button_container{
+.usabilla_live_button_container {
   right: 0px !important;
 }
 
-.learning-header{
+.learning-header {
   z-index: 4;
   position: relative;
   background-color: #fff;
@@ -576,8 +590,86 @@ code {
   width: 32.188rem !important;
 }
 
-th, td {
+th,
+td {
   border: 1px dashed $gray-200;
   padding: 0.4rem;
   white-space: nowrap;
 }
+
+#root {
+  .headerWrapper {
+    &.header-action-bar {
+      z-index: 100 !important;
+      .navbar {
+        padding-bottom: 32px;
+        .pgn {
+          &__searchfield {
+            form {
+              background-color: #f3f3f3 !important;
+
+              .form-control {
+                background-color: #f3f3f3 !important;
+              }
+            }
+          }
+        }
+        .nav-button-group {
+          .nav-item {
+            .nav-link {
+              color: #111827 !important;
+              &.active {
+                background: #4600c7 !important;
+                color: #fff !important;
+                &:hover {
+                  background: #4600c7 !important;
+                  color: #fff !important;
+                }
+              }
+              &:hover {
+                background-color: #f3f3f3 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .sidebarWrapper {
+    border: 1px solid #f3f3f3;
+    border-radius: 8px !important;
+    padding: 0 !important;
+    margin-bottom: 30px !important;
+    overflow: hidden;
+    .discussion-posts {
+      border: 1px solid #f3f3f3;
+      border-radius: 8px 0 0 8px !important;
+    }
+  }
+  .discussionContentWrapper {
+    background-color: #f3f3f3;
+    border-radius: 0 8px 8px 0 !important;
+    .card{
+      &.post-form{
+        border: unset !important;
+      }
+    }
+  }
+}
+.purple-bg.transparent-bg {
+  background-color: transparent !important;
+}
+.buttonActionWrap {
+  button {
+    color: #4600c7 !important;
+  }
+}
+
+.post-card-comment {
+  .hover-button {
+    button {
+      color: #4600c7 !important;
+    }
+  }
+}
+

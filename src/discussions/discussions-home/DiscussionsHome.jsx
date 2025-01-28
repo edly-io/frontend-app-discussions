@@ -86,7 +86,7 @@ const DiscussionsHome = () => {
           {!enableInContextSidebar && <CourseTabsNavigation />}
           {(isEnrolled || !isUserLearner) && (
             <div
-              className={classNames('header-action-bar bg-white position-sticky', {
+              className={classNames('header-action-bar bg-white position-sticky headerWrapper', {
                 'shadow-none border-light-300 border-bottom': enableInContextSidebar,
               })}
               ref={postActionBarRef}
@@ -135,7 +135,7 @@ const DiscussionsHome = () => {
                 </Routes>
               </Suspense>
             ) : (
-              <div className="d-flex flex-row position-relative">
+              <div className="d-flex flex-row position-relative sidebarWrapper">
                 <Suspense fallback={(<Spinner />)}>
                   <DiscussionSidebar displaySidebar={displaySidebar} postActionBarRef={postActionBarRef} />
                 </Suspense>

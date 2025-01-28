@@ -412,7 +412,7 @@ const PostEditor = ({
           <FormikErrorFeedback name="comment" />
         </div>
         <PostPreviewPanel htmlNode={values.comment} isPost editExisting={editExisting} />
-        <div className="d-flex flex-row mt-n4 w-75 text-primary font-style">
+        <div className="d-flex flex-row mt-n4 w-75 purple-color font-style">
           {!editExisting && (
           <>
             <Form.Group>
@@ -421,7 +421,7 @@ const PostEditor = ({
                 checked={values.follow}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="mr-4.5"
+                className="mr-4.5 checkBoxWrap"
               >
                 <span className="font-size-14">
                   {intl.formatMessage(messages.followPost)}
@@ -445,7 +445,7 @@ const PostEditor = ({
           </>
           )}
         </div>
-        <div className="d-flex justify-content-end">
+        <div className="d-flex justify-content-end ">
           <Button
             variant="outline-primary"
             onClick={() => hideEditor(resetForm)}
@@ -458,7 +458,7 @@ const PostEditor = ({
               pending: intl.formatMessage(messages.submitting),
             }}
             state={submitting ? 'pending' : 'default'}
-            className="ml-2"
+            className="ml-2 purple-bg"
             variant="primary"
             onClick={handleSubmit}
           />

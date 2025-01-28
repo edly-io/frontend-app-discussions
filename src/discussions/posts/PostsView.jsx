@@ -88,7 +88,7 @@ const PostsView = () => {
   }, [topicId, category]);
 
   return (
-    <div className="discussion-posts d-flex flex-column h-100">
+    <div className="discussion-posts d-flex flex-column h-100 ">
       {searchString && (
         <SearchInfo
           count={resultsFound}
