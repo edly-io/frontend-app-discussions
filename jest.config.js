@@ -20,3 +20,7 @@ module.exports = createConfig('jest', {
   testTimeout: 30000,
   testEnvironment: 'jsdom'
 });
+
+module.exports.transformIgnorePatterns = [
+  '/node_modules/(?!(@edx|@edunext|@openedx))',
+];
