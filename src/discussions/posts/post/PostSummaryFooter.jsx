@@ -5,7 +5,7 @@ import {
   Badge, Icon, OverlayTrigger, Tooltip,
 } from '@openedx/paragon';
 import {
-  People, QuestionAnswer, QuestionAnswerOutline,
+  People,
   StarFilled, StarOutline, ThumbUpFilled, ThumbUpOutline,
 } from '@openedx/paragon/icons';
 import { useSelector } from 'react-redux';
@@ -16,6 +16,10 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import timeLocale from '../../common/time-locale';
 import { selectUserHasModerationPrivileges } from '../../data/selectors';
 import messages from './messages';
+
+import FilledChatIcon from './filled-chat-icon.svg';
+import OutlineChatIcon from './chat-icon.svg';
+
 
 const PostSummaryFooter = ({
   postId,
@@ -35,8 +39,8 @@ const PostSummaryFooter = ({
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
 
   return (
-    <div className="d-flex align-items-center text-gray-700" style={{ height: '24px' }}>
-      <div className="d-flex align-items-center mr-4.5">
+    <div className="d-flex align-items-center text-gray-700 " style={{ height: '28px' }}>
+      <div className="d-flex align-items-center mr-4.5 ">
         <OverlayTrigger
           overlay={(
             <Tooltip id={`liked-${postId}-tooltip`}>
@@ -68,7 +72,7 @@ const PostSummaryFooter = ({
       </OverlayTrigger>
 
       {preview && commentCount > 1 && (
-        <div className="d-flex align-items-center ml-4.5 text-gray-700 font-style font-size-12">
+        <div className="d-flex align-items-center ml-4.5 text-gray-700 font-style font-size-12" style={{ gap: '5px' }}>
           <OverlayTrigger
             overlay={(
               <Tooltip id={`follow-${postId}-tooltip`}>
@@ -76,12 +80,12 @@ const PostSummaryFooter = ({
               </Tooltip>
             )}
           >
-            <Icon
-              src={unreadCommentCount ? QuestionAnswer : QuestionAnswerOutline}
-              className="post-summary-comment-count-dimensions mr-0.5"
-            >
-              <span className="sr-only">{' '} {intl.formatMessage(messages.activity)}</span>
-            </Icon>
+
+
+<div className="post-summary-comment-count-dimensions mr-0.5 pgn__icon">
+<img  src={unreadCommentCount ? FilledChatIcon : OutlineChatIcon} />
+</div>
+          
           </OverlayTrigger>
           {commentCount}
         </div>

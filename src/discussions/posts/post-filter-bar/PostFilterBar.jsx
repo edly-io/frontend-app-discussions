@@ -29,6 +29,8 @@ import {
 import { selectThreadFilters, selectThreadSorting } from '../data/selectors';
 import messages from './messages';
 
+import FilterIcon from './filter-icon.svg';
+
 export const ActionItem = React.memo(({
   id,
   label,
@@ -184,7 +186,7 @@ const PostFilterBar = () => {
       className="filter-bar collapsible-card-lg border-0"
     >
       <Collapsible.Trigger className="collapsible-trigger border-0">
-        <span className="dark-black-color pr-4 font-style">
+        <span className="pr-4 font-style">
           {intl.formatMessage(messages.sortFilterStatus, {
             own: false,
             type: currentFilters.postType,
@@ -196,10 +198,10 @@ const PostFilterBar = () => {
         </span>
         <span>
           <Collapsible.Visible whenClosed>
-            <Icon src={Tune} />
+          <img src={FilterIcon} alt="FilterIcon" aria-hidden="true" />
           </Collapsible.Visible>
           <Collapsible.Visible whenOpen>
-            <Icon src={Tune} />
+          <img src={FilterIcon} alt="FilterIcon" aria-hidden="true" />
           </Collapsible.Visible>
         </span>
       </Collapsible.Trigger>

@@ -55,7 +55,7 @@ const PostActionsBar = () => {
           <Button
             variant={enableInContextSidebar ? 'plain' : 'brand'}
             className={classNames(
-              'my-0 font-style border-0 line-height-24 purple-bg',
+              'my-0 font-style border-0 line-height-24',
               { 'px-3 py-10px border-0 transparent-bg': enableInContextSidebar },
             )}
             onClick={handleAddPost}
