@@ -177,7 +177,7 @@ const CommentEditor = ({
                 default: intl.formatMessage(messages.submit),
                 pending: intl.formatMessage(messages.submitting),
               }}
-              className="ml-2 purple-bg border-purple-color"
+              className="ml-2"
               variant="primary"
               onClick={handleSubmit}
             />

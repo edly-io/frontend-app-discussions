@@ -49,7 +49,7 @@ const PostPreviewPanel = ({
             variant="link"
             size="sm"
             onClick={() => setShowPreviewPane(true)}
-            className={`dark-black-color font-style p-0 ${editExisting && 'mb-4.5'}`}
+            className={`font-style p-0 ${editExisting && 'mb-4.5'}`}
             style={{ lineHeight: '26px' }}
             data-testid="show-preview-button"
           >

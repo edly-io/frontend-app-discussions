@@ -50,6 +50,9 @@ import { createNewThread, fetchThread, updateExistingThread } from '../data/thun
 import messages from './messages';
 import PostTypeCard from './PostTypeCard';
 
+import QuestionMarkIcon from './question-mark-icon.svg';
+import DiscussionIcon from '../post/chat-icon.svg';
+
 const PostEditor = ({
   editExisting,
 }) => {
@@ -258,13 +261,13 @@ const PostEditor = ({
             value="discussion"
             selected={values.postType === 'discussion'}
             type={intl.formatMessage(messages.discussionType)}
-            icon={<Post />}
+            icon={<img src={DiscussionIcon} aria-hidden="true" />}
           />
           <PostTypeCard
             value="question"
             selected={values.postType === 'question'}
             type={intl.formatMessage(messages.questionType)}
-            icon={<Help />}
+            icon={<img src={QuestionMarkIcon} aria-hidden="true" /> }
           />
         </Form.RadioSet>
         <div className="d-flex flex-row my-4.5 justify-content-between">
@@ -412,7 +415,7 @@ const PostEditor = ({
           <FormikErrorFeedback name="comment" />
         </div>
         <PostPreviewPanel htmlNode={values.comment} isPost editExisting={editExisting} />
-        <div className="d-flex flex-row mt-n4 w-75 purple-color font-style">
+        <div className="d-flex flex-row mt-n4 w-75 font-style">
           {!editExisting && (
           <>
             <Form.Group>
@@ -458,7 +461,7 @@ const PostEditor = ({
               pending: intl.formatMessage(messages.submitting),
             }}
             state={submitting ? 'pending' : 'default'}
-            className="ml-2 purple-bg"
+            className="ml-2 submitButton"
             variant="primary"
             onClick={handleSubmit}
           />
