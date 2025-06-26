@@ -15,9 +15,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import timeLocale from '../../common/time-locale';
 import { selectUserHasModerationPrivileges } from '../../data/selectors';
-import messages from './messages';
-import FilledChatIcon from './filled-chat-icon.svg';
 import OutlineChatIcon from './chat-icon.svg';
+import FilledChatIcon from './filled-chat-icon.svg';
+import messages from './messages';
 
 const PostSummaryFooter = ({
   postId,

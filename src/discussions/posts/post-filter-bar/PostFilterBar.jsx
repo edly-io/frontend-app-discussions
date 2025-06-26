@@ -27,8 +27,8 @@ import {
   setCohortFilter, setPostsTypeFilter, setSortedBy, setStatusFilter,
 } from '../data';
 import { selectThreadFilters, selectThreadSorting } from '../data/selectors';
-import messages from './messages';
 import FilterIcon from './filter-icon.svg';
+import messages from './messages';
 
 export const ActionItem = React.memo(({
   id,

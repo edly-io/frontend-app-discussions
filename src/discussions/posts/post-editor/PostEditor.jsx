@@ -46,10 +46,10 @@ import {
 import { hidePostEditor } from '../data';
 import { selectThread } from '../data/selectors';
 import { createNewThread, fetchThread, updateExistingThread } from '../data/thunks';
+import DiscussionIcon from '../post/chat-icon.svg';
 import messages from './messages';
 import PostTypeCard from './PostTypeCard';
 import QuestionMarkIcon from './question-mark-icon.svg';
-import DiscussionIcon from '../post/chat-icon.svg';
 
 const PostEditor = ({
   editExisting,
