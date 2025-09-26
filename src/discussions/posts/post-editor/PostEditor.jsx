@@ -51,6 +51,8 @@ import { createNewThread, fetchThread, updateExistingThread } from '../data/thun
 import messages from './messages';
 import PostTypeCard from './PostTypeCard';
 
+import { UserMentionPluginSlot } from '../../../plugin-slots/UserMentionPluginSlot';
+
 const PostEditor = ({
   editExisting,
 }) => {
@@ -410,6 +412,7 @@ const PostEditor = ({
             onEditorChange={formikCompatibleHandler(handleChange, 'comment')}
             onBlur={formikCompatibleHandler(handleBlur, 'comment')}
           />
+          <UserMentionPluginSlot text={values.comment} />
           <PostHelpPanel />
           <FormikErrorFeedback name="comment" />
         </div>
