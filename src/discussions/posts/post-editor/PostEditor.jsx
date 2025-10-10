@@ -412,7 +412,7 @@ const PostEditor = ({
             onEditorChange={formikCompatibleHandler(handleChange, 'comment')}
             onBlur={formikCompatibleHandler(handleBlur, 'comment')}
           />
-          <UserMentionPluginSlot text={values.comment} />
+          <UserMentionPluginSlot editor={editorRef.current} />
           <PostHelpPanel />
           <FormikErrorFeedback name="comment" />
         </div>
