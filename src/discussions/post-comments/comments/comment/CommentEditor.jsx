@@ -43,7 +43,7 @@ const CommentEditor = ({
   openRestrictionDialogue,
 }) => {
   const {
-    id, threadId, parentId, rawBody, author, lastEdit,
+    id, threadId, parentId, rawBody, author, lastEdit, userId,
   } = comment;
   const intl = useIntl();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -69,7 +69,7 @@ const CommentEditor = ({
 
   const canDisplayEditReason = (edit
     && (userHasModerationPrivileges || userIsGroupTa || userIsStaff)
-    && author !== authenticatedUser.username
+    && userId !== authenticatedUser.userId
   );
 
   const editReasonCodeValidation = canDisplayEditReason && {

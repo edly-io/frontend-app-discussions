@@ -96,7 +96,7 @@ const PostEditor = ({
 
   const canDisplayEditReason = (editExisting
     && (userHasModerationPrivileges || userIsGroupTa || userIsStaff)
-    && post?.author !== authenticatedUser.username
+    && post?.userId !== authenticatedUser.userId
   );
 
   const editReasonCodeValidation = canDisplayEditReason && {
