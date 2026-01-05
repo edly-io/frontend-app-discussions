@@ -15,6 +15,7 @@ import { TinyMCEEditor } from '../../../../components';
 import FormikErrorFeedback from '../../../../components/FormikErrorFeedback';
 import PostPreviewPanel from '../../../../components/PostPreviewPanel';
 import useDispatchWithState from '../../../../data/hooks';
+import { UserMentionPluginSlot } from '../../../../plugin-slots/UserMentionPluginSlot';
 import DiscussionContext from '../../../common/context';
 import {
   selectModerationSettings,
@@ -27,8 +28,6 @@ import { useDraftContent } from '../../data/hooks';
 import { setDraftComments, setDraftResponses } from '../../data/slices';
 import { addComment, editComment } from '../../data/thunks';
 import messages from '../../messages';
-
-import { UserMentionPluginSlot } from '../../../../plugin-slots/UserMentionPluginSlot';
 
 const CommentEditor = ({
   comment,

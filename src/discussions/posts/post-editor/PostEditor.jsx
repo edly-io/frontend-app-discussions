@@ -21,6 +21,7 @@ import FormikErrorFeedback from '../../../components/FormikErrorFeedback';
 import PostHelpPanel from '../../../components/PostHelpPanel';
 import PostPreviewPanel from '../../../components/PostPreviewPanel';
 import useDispatchWithState from '../../../data/hooks';
+import { UserMentionPluginSlot } from '../../../plugin-slots/UserMentionPluginSlot';
 import selectCourseCohorts from '../../cohorts/data/selectors';
 import fetchCourseCohorts from '../../cohorts/data/thunks';
 import DiscussionContext from '../../common/context';
@@ -50,8 +51,6 @@ import { selectThread } from '../data/selectors';
 import { createNewThread, fetchThread, updateExistingThread } from '../data/thunks';
 import messages from './messages';
 import PostTypeCard from './PostTypeCard';
-
-import { UserMentionPluginSlot } from '../../../plugin-slots/UserMentionPluginSlot';
 
 const PostEditor = ({
   editExisting,
