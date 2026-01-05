@@ -28,6 +28,8 @@ import { setDraftComments, setDraftResponses } from '../../data/slices';
 import { addComment, editComment } from '../../data/thunks';
 import messages from '../../messages';
 
+import { UserMentionPluginSlot } from '../../../../plugin-slots/UserMentionPluginSlot';
+
 const CommentEditor = ({
   comment,
   edit,
@@ -192,6 +194,7 @@ const CommentEditor = ({
               saveDraftContent(content);
             }}
           />
+          <UserMentionPluginSlot editor={editorRef.current} />
           {isFormikFieldInvalid('comment', {
             errors,
             touched,
