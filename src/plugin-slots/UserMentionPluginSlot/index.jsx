@@ -1,6 +1,9 @@
+import PropTypes from 'prop-types';
+
 import { PluginSlot } from '@openedx/frontend-plugin-framework/dist';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+
 import { getConfig } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
 export const UserMentionPluginSlot = ({ editor }) => (
   <PluginSlot
@@ -13,3 +16,8 @@ export const UserMentionPluginSlot = ({ editor }) => (
     }}
   />
 );
+
+UserMentionPluginSlot.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  editor: PropTypes.any.isRequired,
+};
