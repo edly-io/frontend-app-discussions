@@ -214,3 +214,15 @@ export const sendEmailForAccountActivation = async () => {
     .post(url);
   return data;
 };
+
+/**
+ * Fetches FBR roles for a list of usernames in the context of a course.
+ * Returns [{username, role}] where role is one of:
+ * super_admin | middle_admin | data_admin | instructor | trainee
+ */
+export const getUserFbrRoles = (courseId, usernames) => (
+  getAuthenticatedHttpClient().get(
+    `${getConfig().LMS_BASE_URL}/fbr/api/attendance/v1/user-roles/`,
+    { params: { course_id: courseId, usernames: usernames.join(',') } },
+  )
+);

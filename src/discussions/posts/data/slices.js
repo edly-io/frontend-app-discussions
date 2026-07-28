@@ -37,6 +37,7 @@ const threadsSlice = createSlice({
     threadsById: {
       // Mapping of threads ids to threads in them
     },
+    fbrUserRoles: {},
     author: null,
     pages: [],
     threadDraft: null,
@@ -71,6 +72,10 @@ const threadsSlice = createSlice({
         pages: [],
       }
     ),
+    setFbrUserRoles: (state, { payload }) => ({
+      ...state,
+      fbrUserRoles: { ...state.fbrUserRoles, ...payload },
+    }),
     fetchThreadsRequest: (state) => (
       {
         ...state,
@@ -437,6 +442,7 @@ export const {
   clearPostsPages,
   clearFilter,
   clearSort,
+  setFbrUserRoles,
   sendAccountActivationEmailDenied,
   sendAccountActivationEmailFailed,
   sendAccountActivationEmailRequest,

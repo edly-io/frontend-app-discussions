@@ -7,10 +7,10 @@ import { useSelector } from 'react-redux';
 
 import { getConfig } from '@edx/frontend-platform';
 
-import { AvatarOutlineAndLabelColors } from '../../../../data/constants';
+import { AvatarOutlineAndLabelColors, FbrRoleColors } from '../../../../data/constants';
 import { AuthorLabel } from '../../../common';
 import { useAlertBannerVisible } from '../../../data/hooks';
-import { selectAuthorAvatar } from '../../../posts/data/selectors';
+import { selectAuthorAvatar, selectFbrUserRole } from '../../../posts/data/selectors';
 
 const CommentHeader = ({
   author,
@@ -21,7 +21,8 @@ const CommentHeader = ({
   lastEdit,
   commentUsers,
 }) => {
-  const colorClass = AvatarOutlineAndLabelColors[authorLabel];
+  const fbrRole = useSelector(selectFbrUserRole(author));
+  const colorClass = fbrRole ? FbrRoleColors[fbrRole] : AvatarOutlineAndLabelColors[authorLabel];
   const hasAnyAlert = useAlertBannerVisible({
     author,
     abuseFlagged,

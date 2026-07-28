@@ -2,6 +2,7 @@ import { camelCaseObject } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging';
 
 import { setContentCreationRateLimited } from '../../data/slices';
+import { fetchFbrUserRoles } from '../../posts/data/thunks';
 import { getHttpErrorStatus } from '../../utils';
 import {
   deleteComment, getCommentResponses, getThreadComments, postComment, updateComment,
@@ -88,11 +89,19 @@ export function fetchThreadComments(
       const data = await getThreadComments(threadId, {
         page, reverseOrder, threadType, enableInContextSidebar, signal,
       });
+      const normalised = normaliseComments(camelCaseObject(data));
       dispatch(fetchCommentsSuccess({
-        ...normaliseComments(camelCaseObject(data)),
+        ...normalised,
         page,
         threadId,
       }));
+      const courseId = Object.values(normalised.commentsById)[0]?.courseId;
+      if (courseId) {
+        const authors = Object.values(normalised.commentsById).flatMap(c => (
+          [c.author, c.lastEdit?.editorUsername, c.closedBy, c.endorsedBy].filter(Boolean)
+        ));
+        dispatch(fetchFbrUserRoles(courseId, authors));
+      }
     } catch (error) {
       if (getHttpErrorStatus(error) === 403) {
         dispatch(fetchCommentsDenied());
@@ -109,11 +118,19 @@ export function fetchCommentResponses(commentId, { page = 1, reverseOrder = true
     try {
       dispatch(fetchCommentResponsesRequest({ commentId }));
       const data = await getCommentResponses(commentId, { page, reverseOrder });
+      const normalised = normaliseComments(camelCaseObject(data));
       dispatch(fetchCommentResponsesSuccess({
-        ...normaliseComments(camelCaseObject(data)),
+        ...normalised,
         page,
         commentId,
       }));
+      const courseId = Object.values(normalised.commentsById)[0]?.courseId;
+      if (courseId) {
+        const authors = Object.values(normalised.commentsById).flatMap(c => (
+          [c.author, c.lastEdit?.editorUsername, c.closedBy, c.endorsedBy].filter(Boolean)
+        ));
+        dispatch(fetchFbrUserRoles(courseId, authors));
+      }
     } catch (error) {
       if (getHttpErrorStatus(error) === 403) {
         dispatch(fetchCommentResponsesDenied());

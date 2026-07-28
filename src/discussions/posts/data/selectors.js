@@ -61,3 +61,7 @@ export const selectThreadNextPage = () => state => state.threads.nextPage;
 export const selectAuthorAvatar = author => state => (
   state.threads.avatars?.[camelCase(author)]?.profile.image
 );
+
+export const selectFbrUserRole = username => state => (
+  state.threads.fbrUserRoles?.[username] || null
+);

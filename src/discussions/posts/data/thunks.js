@@ -7,7 +7,7 @@ import {
 import { setContentCreationRateLimited } from '../../data/slices';
 import { getHttpErrorStatus } from '../../utils';
 import {
-  deleteThread, getThread, getThreads, postThread, sendEmailForAccountActivation, updateThread,
+  deleteThread, getThread, getThreads, getUserFbrRoles, postThread, sendEmailForAccountActivation, updateThread,
 } from './api';
 import {
   deleteThreadDenied,
@@ -32,12 +32,32 @@ import {
   sendAccountActivationEmailFailed,
   sendAccountActivationEmailRequest,
   sendAccountActivationEmailSuccess,
+  setFbrUserRoles,
   updateThreadAsRead,
   updateThreadDenied,
   updateThreadFailed,
   updateThreadRequest,
   updateThreadSuccess,
 } from './slices';
+
+/**
+ * Fetches FBR roles for a list of author usernames and merges them into the store.
+ */
+export function fetchFbrUserRoles(courseId, authors) {
+  const unique = [...new Set(authors.filter(Boolean))];
+  if (!unique.length) {
+    return () => {};
+  }
+  return async (dispatch) => {
+    try {
+      const { data } = await getUserFbrRoles(courseId, unique);
+      const roleMap = Object.fromEntries(data.map(({ username, role }) => [username, role]));
+      dispatch(setFbrUserRoles(roleMap));
+    } catch (error) {
+      logError(error);
+    }
+  };
+}
 
 /**
  * Filters to apply to a thread/posts query.
@@ -149,6 +169,11 @@ export function fetchThreads(courseId, {
       dispatch(fetchThreadsSuccess({
         ...normalisedData, page, author, textSearchRewrite: data.text_search_rewrite, isFilterChanged,
       }));
+      const threadAuthors = normalisedData.ids.flatMap((id) => {
+        const t = normalisedData.threadsById[id];
+        return [t?.author, t?.lastEdit?.editorUsername, t?.closedBy, t?.endorsedBy].filter(Boolean);
+      });
+      dispatch(fetchFbrUserRoles(courseId, threadAuthors));
     } catch (error) {
       if (getHttpErrorStatus(error) === 403) {
         dispatch(fetchThreadsDenied());
@@ -165,10 +190,16 @@ export function fetchThread(threadId, courseId, isDirectLinkPost = false) {
     try {
       dispatch(fetchThreadRequest({ threadId }));
       const data = await getThread(threadId, courseId);
+      const normalised = normaliseThreads(camelCaseObject(data));
       if (isDirectLinkPost) {
-        dispatch(fetchThreadByDirectLinkSuccess({ ...normaliseThreads(camelCaseObject(data)), page: 1 }));
+        dispatch(fetchThreadByDirectLinkSuccess({ ...normalised, page: 1 }));
       } else {
-        dispatch(fetchThreadSuccess(normaliseThreads(camelCaseObject(data))));
+        dispatch(fetchThreadSuccess(normalised));
+      }
+      const t = Object.values(normalised.threadsById)[0];
+      if (t) {
+        const tAuthors = [t.author, t.lastEdit?.editorUsername, t.closedBy, t.endorsedBy].filter(Boolean);
+        dispatch(fetchFbrUserRoles(courseId, tAuthors));
       }
     } catch (error) {
       if (getHttpErrorStatus(error) === 403 || getHttpErrorStatus(error) === 404) {
