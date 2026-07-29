@@ -60,6 +60,17 @@ body,
   outline: var(--pgn-color-light-400) solid 2px;
 }
 
+.text-fbr-super-admin { color: #C53030; }
+.outline-fbr-super-admin { outline: #DC2626 solid 2px; }
+.text-fbr-middle-admin { color: #D97706; }
+.outline-fbr-middle-admin { outline: #D97706 solid 2px; }
+.text-fbr-data-admin { color: #2563EB; }
+.outline-fbr-data-admin { outline: #2563EB solid 2px; }
+.text-fbr-instructor { color: #16A34A; }
+.outline-fbr-instructor { outline: #16A34A solid 2px; }
+.text-fbr-trainee { color: #6B7280; }
+.outline-fbr-trainee { outline: #6B7280 solid 2px; }
+
 .font-size-8 {
   font-size: 8px !important;
 }

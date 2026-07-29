@@ -2,17 +2,28 @@ import React, { useContext, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { Icon, OverlayTrigger, Tooltip } from '@openedx/paragon';
+import { Institution, Person, School } from '@openedx/paragon/icons';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
 import { generatePath, Link } from 'react-router-dom';
 import * as timeago from 'timeago.js';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { Routes } from '../../data/constants';
+import { FbrRoleColors, FbrRoleLabels, Routes } from '../../data/constants';
 import messages from '../messages';
+import { selectFbrUserRole } from '../posts/data/selectors';
 import { getAuthorLabel } from '../utils';
 import DiscussionContext from './context';
 import timeLocale from './time-locale';
+
+const FBR_ROLE_ICONS = {
+  super_admin: Institution,
+  middle_admin: Institution,
+  data_admin: Institution,
+  instructor: School,
+  trainee: Person,
+};
 
 const AuthorLabel = ({
   author,
@@ -27,11 +38,19 @@ const AuthorLabel = ({
   timeago.register('time-locale', timeLocale);
   const intl = useIntl();
   const { courseId, enableInContextSidebar } = useContext(DiscussionContext);
-  const { icon, authorLabelMessage } = useMemo(() => getAuthorLabel(intl, authorLabel), [authorLabel]);
+  const { icon: courseRoleIcon, authorLabelMessage: courseRoleMessage } = useMemo(
+    () => getAuthorLabel(intl, authorLabel),
+    [authorLabel],
+  );
+  const fbrRole = useSelector(selectFbrUserRole(author));
+
+  const effectiveIcon = fbrRole ? FBR_ROLE_ICONS[fbrRole] : courseRoleIcon;
+  const effectiveMessage = fbrRole ? FbrRoleLabels[fbrRole] : courseRoleMessage;
+  const effectiveColor = fbrRole ? `text-${FbrRoleColors[fbrRole]}` : labelColor;
 
   const isRetiredUser = author ? author.startsWith('retired__user') : false;
-  const showTextPrimary = !authorLabelMessage && !isRetiredUser && !alert;
-  const className = classNames('d-flex align-items-center', { 'mb-0.5': !postOrComment }, labelColor);
+  const showTextPrimary = !effectiveMessage && !isRetiredUser && !alert;
+  const className = classNames('d-flex align-items-center', { 'mb-0.5': !postOrComment }, effectiveColor);
 
   const showUserNameAsLink = linkToProfile && author && author !== intl.formatMessage(messages.anonymous)
                              && !enableInContextSidebar;
@@ -40,52 +59,54 @@ const AuthorLabel = ({
     <span
       className={classNames('mr-1.5 font-style font-weight-500 author-name', {
         'text-gray-700': isRetiredUser,
-        'text-primary-500': !authorLabelMessage && !isRetiredUser,
+        'text-primary-500': !effectiveMessage && !isRetiredUser,
       })}
       role="heading"
       aria-level="2"
     >
       {isRetiredUser ? '[Deactivated]' : author}
     </span>
-  ), [author, authorLabelMessage, isRetiredUser]);
+  ), [author, effectiveMessage, isRetiredUser]);
 
   const labelContents = useMemo(() => (
     <>
-      <OverlayTrigger
-        placement={authorToolTip ? 'top' : 'right'}
-        overlay={(
-          <Tooltip id={authorToolTip ? `endorsed-by-${author}-tooltip` : `${authorLabel}-label-tooltip`}>
-            <>
-              {authorToolTip ? author : authorLabel}
-              <br />
-              {intl.formatMessage(messages.authorAdminDescription)}
-            </>
-          </Tooltip>
-        )}
-        trigger={['hover', 'focus']}
-      >
-        <div className={classNames('d-flex flex-row align-items-center')}>
-          <Icon
-            style={{
-              width: '1rem',
-              height: '1rem',
-            }}
-            src={icon}
-            data-testid="author-icon"
-          />
-          {authorLabelMessage && (
-            <span
-              className={classNames('mr-1.5 font-style font-weight-500', {
-                'text-primary-500': showTextPrimary,
-                'text-gray-700': isRetiredUser,
-              })}
-              style={{ marginLeft: '2px' }}
-            >
-              {authorLabelMessage}
-            </span>
+      {(fbrRole || effectiveIcon) && (
+        <OverlayTrigger
+          placement={authorToolTip ? 'top' : 'right'}
+          overlay={(
+            <Tooltip id={authorToolTip ? `endorsed-by-${author}-tooltip` : `${authorLabel}-label-tooltip`}>
+              <>
+                {authorToolTip ? author : (effectiveMessage || authorLabel)}
+                <br />
+                {intl.formatMessage(messages.authorAdminDescription)}
+              </>
+            </Tooltip>
           )}
-        </div>
-      </OverlayTrigger>
+          trigger={['hover', 'focus']}
+        >
+          <div className={classNames('d-flex flex-row align-items-center')}>
+            <Icon
+              style={{
+                width: '1rem',
+                height: '1rem',
+              }}
+              src={effectiveIcon}
+              data-testid="author-icon"
+            />
+            {effectiveMessage && (
+              <span
+                className={classNames('mr-1.5 font-style font-weight-500', {
+                  'text-primary-500': showTextPrimary,
+                  'text-gray-700': isRetiredUser,
+                })}
+                style={{ marginLeft: '2px' }}
+              >
+                {effectiveMessage}
+              </span>
+            )}
+          </div>
+        </OverlayTrigger>
+      )}
       {postCreatedAt && (
         <span
           title={postCreatedAt}
@@ -99,7 +120,10 @@ const AuthorLabel = ({
         </span>
       )}
     </>
-  ), [author, authorLabelMessage, authorToolTip, icon, isRetiredUser, postCreatedAt, showTextPrimary, alert]);
+  ), [
+    author, effectiveIcon, effectiveMessage, authorToolTip, fbrRole,
+    isRetiredUser, postCreatedAt, showTextPrimary, alert, authorLabel,
+  ]);
 
   const learnerPostsLink = useMemo(() => {
     if (!showUserNameAsLink) {

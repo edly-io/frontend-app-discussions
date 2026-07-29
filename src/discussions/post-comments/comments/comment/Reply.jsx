@@ -9,14 +9,14 @@ import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import HTMLLoader from '../../../../components/HTMLLoader';
-import { AvatarOutlineAndLabelColors, ContentActions } from '../../../../data/constants';
+import { AvatarOutlineAndLabelColors, ContentActions, FbrRoleColors } from '../../../../data/constants';
 import {
   ActionsDropdown, AlertBanner, AuthorLabel, Confirmation,
 } from '../../../common';
 import timeLocale from '../../../common/time-locale';
 import { ContentTypes } from '../../../data/constants';
 import { useAlertBannerVisible } from '../../../data/hooks';
-import { selectAuthorAvatar } from '../../../posts/data/selectors';
+import { selectAuthorAvatar, selectFbrUserRole } from '../../../posts/data/selectors';
 import { selectCommentOrResponseById } from '../../data/selectors';
 import { editComment, removeComment } from '../../data/thunks';
 import messages from '../../messages';
@@ -33,7 +33,8 @@ const Reply = ({ responseId }) => {
   const [isEditing, setEditing] = useState(false);
   const [isDeleting, showDeleteConfirmation, hideDeleteConfirmation] = useToggle(false);
   const [isReporting, showReportConfirmation, hideReportConfirmation] = useToggle(false);
-  const colorClass = AvatarOutlineAndLabelColors[authorLabel];
+  const fbrRole = useSelector(selectFbrUserRole(author));
+  const colorClass = fbrRole ? FbrRoleColors[fbrRole] : AvatarOutlineAndLabelColors[authorLabel];
   const hasAnyAlert = useAlertBannerVisible({
     author,
     abuseFlagged,

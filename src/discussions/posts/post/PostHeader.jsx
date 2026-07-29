@@ -9,16 +9,17 @@ import { useSelector } from 'react-redux';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import { AvatarOutlineAndLabelColors, ThreadType } from '../../../data/constants';
+import { AvatarOutlineAndLabelColors, FbrRoleColors, ThreadType } from '../../../data/constants';
 import { AuthorLabel } from '../../common';
 import { useAlertBannerVisible } from '../../data/hooks';
-import { selectAuthorAvatar } from '../data/selectors';
+import { selectAuthorAvatar, selectFbrUserRole } from '../data/selectors';
 import messages from './messages';
 
 export const PostAvatar = React.memo(({
   author, postType, authorLabel, fromPostLink, read, postUsers,
 }) => {
-  const outlineColor = AvatarOutlineAndLabelColors[authorLabel];
+  const fbrRole = useSelector(selectFbrUserRole(author));
+  const outlineColor = fbrRole ? FbrRoleColors[fbrRole] : AvatarOutlineAndLabelColors[authorLabel];
   const authorAvatars = useSelector(selectAuthorAvatar(author));
 
   const avatarSize = useMemo(() => {

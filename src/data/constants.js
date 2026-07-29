@@ -84,6 +84,22 @@ export const AvatarOutlineAndLabelColors = {
   'Community TA': 'TA-color',
 };
 
+export const FbrRoleColors = {
+  super_admin: 'fbr-super-admin',
+  middle_admin: 'fbr-middle-admin',
+  data_admin: 'fbr-data-admin',
+  instructor: 'fbr-instructor',
+  trainee: 'fbr-trainee',
+};
+
+export const FbrRoleLabels = {
+  super_admin: 'Super Admin',
+  middle_admin: 'Middle Admin',
+  data_admin: 'Data Admin',
+  instructor: 'Instructor',
+  trainee: 'Trainee',
+};
+
 /**
  * Enum for thread ordering.
  * @readonly
